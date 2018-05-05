@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+npm install -g npm yarn yo ava backstopjs gulp-cli typescript tslint  @angular/cli react-static
+basher update
+for p in $(basher outdated); do echo "Update "$p" ..."; basher upgrade $p; done
+brew update
+brew upgrade
+composer self-update
+pip3 install --upgrade pip
+# update all outdated pip packages see: https://stackoverflow.com/questions/2720014/upgrading-all-packages-with-pip
+brew cask upgrade
+for p in $(brew cask list); do echo "Update "$p" ..."; brew cask upgrade $p; done
