@@ -1,22 +1,14 @@
 #!/usr/bin/env bash
 
-echo "" \
-&& echo "** Global npm **" \
-&& echo "" \
-&& ls /usr/local/lib/node_modules/ \
-&& echo "" \
-&& echo "** Basher **" \
-&& echo "" \
-&& basher list \
-&& echo "" \
-&& echo "** Brew **" \
-&& echo "" \
-&& brew list \
-&& echo "" \
-&& echo "** Brew Cask **" \
-&& echo "" \
-&& brew cask list \
-&& echo "" \
-&& echo "** Pip **" \
-&& echo "" \
-&& pip list
+
+echo "** Global npm **"
+ls /usr/local/lib/node_modules/
+npm -g list --depth=0
+echo "** Basher **"
+basher list
+echo "** Brew **"
+brew list
+echo "** Brew Cask **"
+brew cask list
+echo "** Pip **"
+pip list
