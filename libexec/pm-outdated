@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+echo "npm";
+npm -g outdated ;
+echo "basher" ;
+basher outdated ;
+echo "brew" ;
+brew outdated ;
+echo "brew cask" ;
+brew cask outdated ;
+echo "pip" ;
+pip list --outdated ;
