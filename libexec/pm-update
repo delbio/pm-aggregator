@@ -7,6 +7,6 @@ brew update
 brew upgrade
 composer self-update
 pip3 install --upgrade pip
-# update all outdated pip packages see: https://stackoverflow.com/questions/2720014/upgrading-all-packages-with-pip
+pip_upgrade_outdated
 brew cask upgrade
 for p in $(brew cask list); do echo "Update "$p" ..."; brew cask upgrade $p; done
