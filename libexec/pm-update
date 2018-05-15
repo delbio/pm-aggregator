@@ -1,4 +1,13 @@
 #!/usr/bin/env bash
+#
+# Summary:
+#    Update all outdated packages
+#
+#    brew cask reinstall unity web-player as sudo all time
+#    npm has not update only global outdated packages
+#
+# Usage: pm update
+#
 
 npm install -g npm yarn yo ava backstopjs gulp-cli typescript tslint  @angular/cli react-static bower
 basher update

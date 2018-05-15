@@ -1,18 +1,10 @@
 #!/usr/bin/env bash
 #
-# Summary: Utility library for developing bash scripts
+# Summary: Aggregator command to manage all package manager at the same time.
 #
 # Usage: pm <command> [<args>]
-#
-# Commands starting with an '_' are meant to be used from other scripts.
-#
-# Some useful pm commands are:
-#    help         Display help for a pm command
-#
-# Some useful scripting commands are:
-#    _help        Display help for any command
-#
-# See 'pm help <command>' for information on a specific command.
+
+set -e
 
 resolve_link() {
   $(type -p greadlink readlink | head -1) "$1"
