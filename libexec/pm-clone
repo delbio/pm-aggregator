@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+#
+# Summary:
+#    Clone all git repos readed from init.bash
+#
+#    create init.bash file with repos=(); array of
+#    recipientfiles, es: repo=(repos.txt folder/repos.txt);
+#    Command create folder if not present into filesystem
+#
+# Usage: pm clone
+#
+
+function install {
+    local recipient_file=${1}
+    if [ ! -f $recipient_file ];
+    then
+        echo "Selected Recipient file: $recipient_file not found, skip install"
+        exit
+    fi
+    while read repo
+    do
+        git clone $repo
+    done < $recipient_file
+}
+
+function init {
+    baseFolder=$(pwd)
+    source $baseFolder/init.bash
+    for repo in ${repos[*]};
+    do
+        path=$baseFolder/$repo
+        dir_path=$(dirname "$path")
+        echo $dir_path
+        mkdir -p $dir_path
+        cd $dir_path
+        install $path
+        cd $baseFolder
+    done
+}
+
+init
