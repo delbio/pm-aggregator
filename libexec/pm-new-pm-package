@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#
+# Summary: Create a new empty basher package manager wrapper
+#
+# Usage: pm new-pm-package <prefix-package>
+#
+# Creates an empty package manager wrapper skeleton.
+
+set -e
+#set -x
+
+pmname=$1
+
+packagename=pm-$pmname
+
+mkdir -p ${packagename}
+cd ${packagename}
+pm new-package ${packagename}
+lasher new-command ${packagename}-outdated
+lasher new-command ${packagename}-list
+lasher new-command ${packagename}-update
+lasher new-command ${packagename}-outdated
