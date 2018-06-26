@@ -93,7 +93,11 @@ function copy_test_files()
 
         local upper_package=$(echo $pname | awk '{print toupper($0)}')
         sed -i -e "s/PM/${upper_package}/g" ${dest_file}
-        rm ${dest_file}-e
+
+	if [ -f ${dest_file}-e ];
+	then
+        	rm ${dest_file}-e
+	fi
     done
 }
 function make_bin_link()
