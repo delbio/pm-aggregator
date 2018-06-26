@@ -92,6 +92,7 @@ function copy_test_files()
         sed s/pm/${pname}/g <$source_file >$dest_file
 
         local upper_package=$(echo $pname | awk '{print toupper($0)}')
+	upper_package=$(echo $upper_package | sed 's/-/_/g')
         sed -i -e "s/PM/${upper_package}/g" ${dest_file}
 
 	if [ -f ${dest_file}-e ];
