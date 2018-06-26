@@ -1,0 +1,117 @@
+#!/usr/bin/env bash
+#
+# Summary: Create a new empty basher package
+#
+# Usage: pm new-package <prefix-package>
+#
+# Creates an empty package skeleton.
+
+set -e
+set -x
+
+package=$1
+
+resolve_link() {
+  $(type -p greadlink readlink | head -1) "$1"
+}
+
+abs_dirname() {
+  local cwd="$(pwd)"
+  local path="$1"
+
+  while [ -n "$path" ]; do
+    cd "${path%/*}"
+    local name="${path##*/}"
+    path="$(resolve_link "$name" || true)"
+  done
+
+  pwd
+  cd "$cwd"
+}
+
+bin_path="$(abs_dirname "$0")"
+
+BASE_RESOURCE_FOLDER=${bin_path}/../resources/new-package
+
+function create_folder_if_not_exist()
+{
+    local file=$1
+    local dir_path=$(dirname "$file")
+    if [ ! -d "$dir_path" ]; then
+        mkdir -p $dir_path
+    fi
+}
+function copy_package_meta_files()
+{
+    local pname=$1
+
+    local copy_only_files=(
+        makefile
+        package.sh
+        tests/lib/assertions.bash
+    )
+    for file in ${copy_only_files[*]};
+    do
+        create_folder_if_not_exist $file
+        local source_file=${BASE_RESOURCE_FOLDER}/${file}
+        local dest_file=./"$(echo "$file" | sed s/pm/${pname}/)"
+        cp $source_file $dest_file
+    done
+}
+
+function copy_packages_files()
+{
+    local pname=$1
+    local package_files=(
+        libexec/pm
+        libexec/pm-help
+        libexec/pm-commands
+    )
+    for file in ${package_files[*]};
+    do
+        create_folder_if_not_exist $file
+        local source_file=${BASE_RESOURCE_FOLDER}/${file}
+        local dest_file=./"$(echo "$file" | sed s/pm/${pname}/)"
+        sed s/pm/${pname}/g <$source_file >$dest_file
+        chmod +x "$dest_file"
+    done
+}
+
+function copy_test_files()
+{
+    local pname=$1
+    local test_files=(
+        tests/test_helper.bash
+        tests/pm-help.bats
+    )
+    for file in ${test_files[*]};
+    do
+        create_folder_if_not_exist $file
+        local source_file=${BASE_RESOURCE_FOLDER}/${file}
+        local dest_file=./"$(echo "$file" | sed s/pm/${pname}/)"
+        sed s/pm/${pname}/g <$source_file >$dest_file
+
+        local upper_package=$(echo $pname | awk '{print toupper($0)}')
+        sed -i -e "s/PM/${upper_package}/g" ${dest_file}
+        rm ${dest_file}-e
+    done
+}
+function make_bin_link()
+{
+    local pname=$1
+    create_folder_if_not_exist ./bin/$pname
+    cd ./bin
+    ln -s ../libexec/$pname $pname
+    chmod +x $pname
+    cd ..
+}
+function make_test()
+{
+    make
+}
+
+copy_package_meta_files ${package}
+copy_packages_files ${package}
+copy_test_files ${package}
+make_bin_link ${package}
+make_test ${package}
