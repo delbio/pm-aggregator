@@ -8,10 +8,21 @@
 #
 # Usage: pm update
 #
-npm install -g npm 
-npm update -g
-basher update
-for p in $(basher outdated); do echo "Update "$p" ..."; basher upgrade $p; done
+
+set -e
+
+pms=(
+npm
+basher
+)
+
+for pmname in ${pms[*]};
+do
+    echo "${pmname}"
+    pm-${pmname} update
+done
+
+
 brew update
 brew upgrade
 composer self-update

@@ -7,7 +7,6 @@
 # Creates an empty package manager wrapper skeleton.
 
 set -e
-#set -x
 
 pmname=$1
 

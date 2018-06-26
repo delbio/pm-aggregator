@@ -5,10 +5,19 @@
 # Usage: pm outdated
 #
 
-echo "npm";
-npm -g outdated ;
-echo "basher" ;
-basher outdated ;
+set -e
+
+pms=(
+npm
+basher
+)
+
+for pmname in ${pms[*]};
+do
+    echo "${pmname}"
+    pm-${pmname} outdated
+done
+
 echo "brew" ;
 brew outdated ;
 echo "brew cask" ;

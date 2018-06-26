@@ -7,7 +7,6 @@
 # Creates an empty package skeleton.
 
 set -e
-#set -x
 
 package=$1
 

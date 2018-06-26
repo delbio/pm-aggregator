@@ -4,11 +4,19 @@
 #
 # Usage: pm list
 
-echo "** Global npm **"
-ls /usr/local/lib/node_modules/
-npm -g list --depth=0
-echo "** Basher **"
-basher list
+set -e
+
+pms=(
+npm
+basher
+)
+
+for pmname in ${pms[*]};
+do
+    echo "${pmname}"
+    pm-${pmname} list
+done
+
 echo "** Brew **"
 brew list
 echo "** Brew Cask **"
