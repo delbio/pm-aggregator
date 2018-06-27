@@ -11,4 +11,4 @@
 
 set -e
 
-pm _exec-action-over-all $PMS_ENABLED list
+pm _exec-action-over-all $PMS_ENABLED update
