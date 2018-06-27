@@ -27,6 +27,11 @@ abs_dirname() {
 bin_path="$(abs_dirname "$0")"
 export PATH="${bin_path}:${PATH}"
 
+if [ -z "$PMS_ENABLED" ]; then
+  PMS_ENABLED=""
+fi
+export PMS_ENABLED
+
 command="$1"
 case "$command" in
 "")

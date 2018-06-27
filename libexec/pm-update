@@ -11,22 +11,8 @@
 
 set -e
 
-pms=(
-npm
-basher
-)
+pm _exec-action-over-all $PMS_ENABLED list
 
-for pmname in ${pms[*]};
-do
-    echo "${pmname}"
-    pm-${pmname} update
-done
-
-
-brew update
-brew upgrade
 composer self-update
 pip3 install --upgrade pip
 pip_upgrade_outdated
-brew cask upgrade
-for p in $(brew cask list); do echo "Update "$p" ..."; brew cask upgrade $p; done

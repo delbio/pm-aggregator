@@ -7,20 +7,7 @@
 
 set -e
 
-pms=(
-npm
-basher
-)
+pm _exec-action-over-all $PMS_ENABLED outdated
 
-for pmname in ${pms[*]};
-do
-    echo "${pmname}"
-    pm-${pmname} outdated
-done
-
-echo "brew" ;
-brew outdated ;
-echo "brew cask" ;
-brew cask outdated ;
 echo "pip" ;
 pip list --outdated ;

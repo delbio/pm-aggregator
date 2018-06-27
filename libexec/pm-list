@@ -6,20 +6,8 @@
 
 set -e
 
-pms=(
-npm
-basher
-)
+pm _exec-action-over-all $PMS_ENABLED list
 
-for pmname in ${pms[*]};
-do
-    echo "${pmname}"
-    pm-${pmname} list
-done
-
-echo "** Brew **"
-brew list
-echo "** Brew Cask **"
-brew cask list
 echo "** Pip **"
 pip list
+
