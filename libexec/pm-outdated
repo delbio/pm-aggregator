@@ -8,6 +8,3 @@
 set -e
 
 pm _exec-action-over-all $PMS_ENABLED outdated
-
-echo "pip" ;
-pip list --outdated ;

@@ -12,7 +12,3 @@
 set -e
 
 pm _exec-action-over-all $PMS_ENABLED list
-
-composer self-update
-pip3 install --upgrade pip
-pip_upgrade_outdated
