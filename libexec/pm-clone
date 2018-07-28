@@ -23,19 +23,37 @@ function install {
     done < $recipient_file
 }
 
-function init {
-    baseFolder=$(pwd)
-    source $baseFolder/init.bash
+function cloneFromRepoFile {
+    local baseFolder=$1
+    local repo=$2
+    local path=$baseFolder/$repo
+    local dir_path=$(dirname "$path")
+    echo $dir_path
+    mkdir -p $dir_path
+    cd $dir_path
+    install $path
+    cd $baseFolder
+}
+
+function cloneFormInitBash {
+    local baseFolder=$1
+    local initFile=$2
+    source $initFile
     for repo in ${repos[*]};
     do
-        path=$baseFolder/$repo
-        dir_path=$(dirname "$path")
-        echo $dir_path
-        mkdir -p $dir_path
-        cd $dir_path
-        install $path
-        cd $baseFolder
+        cloneFromRepoFile $baseFolder $repo
     done
 }
 
-init
+function clone {
+    local baseFolder=$1
+    local initFile=$baseFolder/init.bash
+    if [ -f $initFile ]; then
+        cloneFormInitBash $baseFolder $initFile
+    else
+        cloneFromRepoFile $baseFolder repos.txt
+    fi
+}
+
+baseFolder=$(pwd)
+clone $baseFolder
